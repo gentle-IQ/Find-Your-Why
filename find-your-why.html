@@ -71,6 +71,12 @@ dialog.email-choice p{color:var(--muted)}
 dialog.email-choice .apps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:20px}dialog.email-choice .app{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 6px;border:1px solid rgba(15,30,77,.14);border-radius:14px;background:#fff;color:#0F1E4D;font-size:13px;font-weight:600;text-align:center;transition:transform .15s,border-color .15s}dialog.email-choice .app:hover{transform:translateY(-2px);border-color:#C9A24B}dialog.email-choice .app:focus-visible{outline:3px solid #C9A24B;outline-offset:2px}dialog.email-choice .app svg{width:40px;height:40px}dialog.email-choice .cancel{display:block;width:100%;margin-top:14px}@media (max-width:420px){dialog.email-choice .apps{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:480px){h1{font-size:28px}.bar{grid-template-columns:110px 1fr 40px;font-size:14px}}
 .printonly{display:none}
+body.pdf-mode .actions,body.pdf-mode .nav,body.pdf-mode .noprint{display:none!important}
+body.pdf-mode .printonly{display:block!important}
+.stmt-copy{display:none;white-space:pre-wrap;margin:0;padding:12px;border:1.5px solid var(--line);border-radius:10px}
+body.pdf-mode #stmt{display:none!important}
+body.pdf-mode .stmt-copy{display:block}
+body.pdf-mode .card,body.pdf-mode .theme-card{border-color:#999}
 @media print{
   body{background:#fff;color:#000}
   header.brand,.actions,.nav,.noprint{display:none!important}
@@ -88,8 +94,6 @@ dialog.email-choice .apps{display:grid;grid-template-columns:repeat(4,1fr);gap:1
 <script>
 /* ===== Settings: edit these three lines before you publish ===== */
 var MENTOR_NAME = "Sir Isaac";       // name shown in the quiz introduction
-var MENTOR_WHATSAPP = "233557229000"; // digits only with country code
-var MENTOR_EMAIL = "echoesofwisdom.ministries@gmail.com";
 
 /* ===== Content ===== */
 var THEMES = {
@@ -371,7 +375,7 @@ function renderResult(){
   });
   html += '</div><p class="small muted">The percentage shows how often you chose that theme out of the times it was offered.</p></div><div style="height:14px"></div>';
   html += '<div class="card"><h3>Your draft purpose statement</h3><p class="small muted">Edit it until it sounds like you. Your purpose is bigger than a job title, and it will sharpen over time.</p>'+
-    '<label class="field" for="stmt">My draft</label><textarea id="stmt">'+esc(state.statement)+'</textarea></div><div style="height:14px"></div>';
+    '<label class="field" for="stmt">My draft</label><textarea id="stmt">'+esc(state.statement)+'</textarea><p class="stmt-copy" id="stmtCopy"></p></div><div style="height:14px"></div>';
   var t1 = THEMES[top[0].key];
   html += '<div class="card"><h3>Your next steps</h3><ul class="steps">'+t1.steps.map(function(s){return '<li>'+esc(s)+'</li>';}).join('')+
     '<li>Test your draft with the seven lenses: Scripture, prayer, gifts, burden, counsel, open doors and faithfulness.</li></ul>'+
@@ -396,15 +400,15 @@ function renderResult(){
   html += '<div class="card noprint"><h3>Share with your mentor</h3>'+
     '<p class="muted">Sharing is your choice. Add a contact, review the message, then choose how to share it. Nothing is sent until you press a sharing button; contact details stay on this device.</p>'+
     '<label class="field" for="mentorEmail">Mentor email</label>'+
-    '<input id="mentorEmail" type="email" autocomplete="email" placeholder="name@example.com" value="'+esc(MENTOR_EMAIL)+'">'+
+    '<input id="mentorEmail" type="email" autocomplete="email" placeholder="name@example.com" value="">'+
     '<label class="field" for="mentorWhatsapp">Mentor WhatsApp number</label>'+
-    '<input id="mentorWhatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="Country code and number, e.g. 233XXXXXXXXX" value="'+esc(MENTOR_WHATSAPP)+'">'+
+    '<input id="mentorWhatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="Country code and number, e.g. 233XXXXXXXXX" value="">'+
     '<div class="actions"><button class="primary" id="reviewShare">Review message</button></div>'+
     '<div id="sharePreview" hidden><label class="field" for="shareMessage">Preview and edit what you will share</label>'+
     '<textarea id="shareMessage" aria-describedby="shareHint"></textarea>'+
     '<p id="shareHint" class="small muted">Only the text in this box will be shared.</p>'+
     '<div class="actions"><button class="primary" id="wa">Share via WhatsApp</button><button id="mail">Share via email app</button></div></div>'+
-    '<div class="actions"><button id="copy">Copy my results</button><button id="print">Print or save as PDF</button><button id="again">Start again</button></div>'+
+    '<div class="actions"><button id="copy">Copy my results</button><button id="savePdf">Save as PDF</button><button id="again">Start again</button></div>'+
     '<div class="toast" id="toast" role="status"></div></div>';
   app.innerHTML = html;
 
@@ -449,8 +453,62 @@ function renderResult(){
       navigator.clipboard.writeText(txt).then(function(){ toast("Copied. You can paste it anywhere."); },function(){ toast("Could not copy. Select the text and copy it yourself."); });
     } else { toast("Copy is not available in this browser."); }
   };
-  $('#print').onclick = function(){ window.print(); };
+  $('#savePdf').onclick = function(){
+    var btn = this;
+    state.statement = $('#stmt').value;
+    btn.disabled = true; toast("Preparing your PDF...");
+    loadPdfLib(function(ok){
+      if(!ok){ btn.disabled = false; toast(""); window.print(); return; }
+      var scrollPos = window.scrollY;
+      window.scrollTo(0,0);
+      $('#stmtCopy').textContent = state.statement;
+      document.body.classList.add('pdf-mode');
+      window.html2pdf().set({
+        margin: [10,10,10,10],
+        filename: (state.name ? state.name.replace(/[^\w-]+/g,'-')+'-' : '')+'find-your-why-results.pdf',
+        image: {type:'jpeg', quality:0.95},
+        html2canvas: {scale:2, useCORS:true, backgroundColor:'#ffffff', scrollX:0, scrollY:0},
+        jsPDF: {unit:'mm', format:'a4', orientation:'portrait'},
+        pagebreak: {mode:['css']}
+      }).from(app).toContainer().then(function(){ pdfPageBreaks(this.prop.container); })
+      .save().then(function(){
+        document.body.classList.remove('pdf-mode'); window.scrollTo(0,scrollPos); btn.disabled = false; toast("PDF saved.");
+      }, function(){
+        document.body.classList.remove('pdf-mode'); window.scrollTo(0,scrollPos); btn.disabled = false; toast(""); window.print();
+      });
+    });
+  };
   $('#again').onclick = function(){ state = {step:0, answers:{}, custom:{}, people:[], peopleOther:"", words:{}, name:"", statement:""}; go(0); };
+}
+
+var PDF_LIB = "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
+function loadPdfLib(cb){
+  if(window.html2pdf) return cb(true);
+  var sc = document.createElement('script');
+  sc.src = PDF_LIB; sc.onload = function(){ cb(!!window.html2pdf); }; sc.onerror = function(){ cb(false); };
+  document.head.appendChild(sc);
+}
+
+// Push any card that would straddle an A4 page edge down to the next page.
+// Runs on html2pdf's off-screen copy, whose width is the page content width
+// (A4 minus 10mm margins = 190mm x 277mm), so one page is width * 277/190 px tall.
+function pdfPageBreaks(root){
+  var pageH = root.getBoundingClientRect().width * 277 / 190, gap = 12;
+  var cards = [].slice.call(root.querySelectorAll('.card, .theme-card')).filter(function(el){
+    return el.offsetParent !== null && !el.parentElement.closest('.card, .theme-card');
+  });
+  cards.forEach(function(el){
+    var base = root.getBoundingClientRect().top, r = el.getBoundingClientRect();
+    var top = r.top - base, bottom = r.bottom - base;
+    if(r.height >= pageH - 2 * gap) return;
+    var pageEnd = (Math.floor(top / pageH) + 1) * pageH;
+    if(bottom > pageEnd - gap){
+      // A spacer block, not a margin: margins would collapse into the gap above.
+      var spacer = document.createElement('div');
+      spacer.style.height = (pageEnd - top + gap) + 'px';
+      el.parentNode.insertBefore(spacer, el);
+    }
+  });
 }
 
 function render(){
