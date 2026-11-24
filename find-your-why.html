@@ -118,10 +118,10 @@ var THEMES = {
     verse:"“Let us rise up and build. So they strengthened their hands for this good work.” (Nehemiah 2:18)",
     steps:["This week: take responsibility for one small project and finish it well.","In 30 days: lead a small team or event, with a mentor checking in.","To grow: study servant leadership and read Nehemiah 1 and 2."]},
   create:{ name:"Creating and Communicating", how:"creative work",
-    desc:"You make things that move people: design, music, writing, video, drama. You see beauty and ideas others miss.",
+    desc:"You make things that move people: design, writing, video, drama. You see beauty and ideas others miss.",
     act:function(p){return "use my creativity to inspire "+p;}, change:"God's truth is seen, heard and felt",
     verse:"“And I have filled him with the spirit of God, in wisdom, and in understanding, and in knowledge, and in all manner of workmanship.” (Exodus 31:3)",
-    steps:["This week: make one thing (a poster, song, post or short video) that points people to God's truth.","In 30 days: offer your skill regularly to your church or a ministry.","To grow: build a small portfolio and ask for honest feedback."]},
+    steps:["This week: make one thing (a poster, post, story or short video) that points people to God's truth.","In 30 days: offer your skill regularly to your church or a ministry.","To grow: build a small portfolio and ask for honest feedback."]},
   build:{ name:"Building and Solving", how:"building and problem solving",
     desc:"You like to figure out how things work and make them better. Give you a problem and you look for a way.",
     act:function(p){return "build solutions that help "+p;}, change:"real problems are solved and lives are made better",
@@ -136,50 +136,70 @@ var THEMES = {
     desc:"You can't keep the good news to yourself. You are drawn to people who do not yet know Jesus.",
     act:function(p){return "share the good news with "+p;}, change:"people come to know Jesus",
     verse:"“Go ye into all the world, and preach the gospel to every creature.” (Mark 16:15)",
-    steps:["This week: pray for three people by name and share your testimony with one.","In 30 days: join an outreach team or start regular conversations about faith.","To grow: learn to explain the gospel simply, and study the book of Acts."]}
+    steps:["This week: pray for three people by name and share your testimony with one.","In 30 days: join an outreach team or start regular conversations about faith.","To grow: learn to explain the gospel simply, and study the book of Acts."]},
+  pray:{ name:"Prayer and Intercession", how:"prayer",
+    desc:"You are drawn to pray for people, places and situations. You sense when something needs to be brought before God, and you keep praying until it changes.",
+    act:function(p){return "pray for "+p;}, change:"God's will is done and they experience His power",
+    verse:"“I exhort therefore, that, first of all, supplications, prayers, intercessions, and giving of thanks, be made for all men.” (1 Timothy 2:1)",
+    steps:["This week: write down five people and pray for each of them by name every day.","In 30 days: join or start a regular prayer meeting or prayer chain.","To grow: learn from a mature intercessor, and study Paul's prayers in Ephesians 1 and 3."]},
+  encourage:{ name:"Encouraging and Counselling", how:"encouragement and counsel",
+    desc:"You give people courage and help them see their next step. Your words lift people up and point them in the right direction.",
+    act:function(p){return "encourage and counsel "+p;}, change:"they take heart and walk wisely in God's purpose",
+    verse:"“Wherefore comfort yourselves together, and edify one another, even as also ye do.” (1 Thessalonians 5:11)",
+    steps:["This week: send a specific word of encouragement to three people.","In 30 days: meet regularly with one younger person to listen, encourage and pray.","To grow: learn good listening and counselling skills, and study the life of Barnabas in Acts."]},
+  worship:{ name:"Worship and Music", how:"worship",
+    desc:"You come alive when people praise God together. Through music and song you help others draw near to Him.",
+    act:function(p){return "lead "+p+" into worship";}, change:"they encounter God and give Him glory",
+    verse:"“O sing unto the LORD a new song: sing unto the LORD, all the earth.” (Psalm 96:1)",
+    steps:["This week: spend time worshipping God on your own, then share a song that moved you with someone.","In 30 days: join or serve with your church's worship team or choir.","To grow: keep developing your musical skill, and study the Psalms and 2 Chronicles 5."]},
+  justice:{ name:"Justice and Advocacy", how:"standing for justice",
+    desc:"You notice when people are treated unfairly and you cannot stay silent. You speak up for the poor, the oppressed and those without a voice.",
+    act:function(p){return "stand up for "+p;}, change:"they are treated with fairness, dignity and mercy",
+    verse:"“He hath shewed thee, O man, what is good; and what doth the LORD require of thee, but to do justly, and to love mercy, and to walk humbly with thy God?” (Micah 6:8)",
+    steps:["This week: learn about one injustice in your community and pray about how to respond.","In 30 days: volunteer with a church or group that serves the poor, the vulnerable or the oppressed.","To grow: study Isaiah 1:17 and Micah 6:8, and learn from someone already working for justice."]}
 };
 
 var QUESTIONS = [
   {sec:"What you do well", q:"When friends or classmates need help, what do they usually ask you for?", o:[
-    ["To explain something clearly","teach"],["To listen and encourage them","care"],["To organise or sort out a plan","lead"],["To fix, build or solve a technical problem","build"],["To design, write or make something","create"]]},
+    ["To explain something clearly","teach"],["To listen and encourage them","care"],["To organise or sort out a plan","lead"],["To fix, build or solve a technical problem","build"],["To design, write or make something","create"],["To pray for them","pray"],["To give advice or help them see a way forward","encourage"]]},
   {sec:"What you do well", q:"Which of these comes naturally to you, even without training?", o:[
-    ["Making complicated things simple","teach"],["Sensing when someone is hurting","care"],["Getting a group moving in the same direction","lead"],["Spotting practical needs and meeting them","serve"],["Making things look, sound or read beautifully","create"]]},
+    ["Making complicated things simple","teach"],["Sensing when someone is hurting","care"],["Getting a group moving in the same direction","lead"],["Spotting practical needs and meeting them","serve"],["Making things look, sound or read beautifully","create"],["Praying for people and situations","pray"],["Lifting people's spirits with the right words","encourage"],["Singing or playing music","worship"],["Noticing when something is unfair","justice"]]},
   {sec:"What you do well", q:"Which tasks do you enjoy most at school, work or church?", o:[
-    ["Presenting or teaching a topic","teach"],["Welcoming people and making them comfortable","serve"],["Analysing problems and finding solutions","build"],["Managing money or raising support","give"],["Telling others what I believe","reach"]]},
+    ["Presenting or teaching a topic","teach"],["Welcoming people and making them comfortable","serve"],["Analysing problems and finding solutions","build"],["Managing money or raising support","give"],["Telling others what I believe","reach"],["Leading worship or singing","worship"],["Speaking up for someone treated unfairly","justice"]]},
   {sec:"What you do well", q:"What have people praised you for?", o:[
-    ["My kindness and compassion","care"],["My creativity","create"],["My reliability and hard work","serve"],["My vision and confidence","lead"],["My generosity","give"]]},
+    ["My kindness and compassion","care"],["My creativity","create"],["My reliability and hard work","serve"],["My vision and confidence","lead"],["My generosity","give"],["My prayer life","pray"],["My encouraging words","encourage"],["My voice or musical gift","worship"],["My sense of fairness and courage","justice"]]},
   {sec:"What you do well", q:"Which gift do you think you may have?", o:[
-    ["Teaching","teach"],["Mercy and compassion","care"],["Leading","lead"],["Serving","serve"],["Giving","give"],["Sharing the gospel","reach"]]},
+    ["Teaching","teach"],["Mercy and compassion","care"],["Leading","lead"],["Serving","serve"],["Giving","give"],["Sharing the gospel","reach"],["Prayer and intercession","pray"],["Encouragement and counsel","encourage"],["Worship and music","worship"],["Standing up for justice","justice"]]},
   {sec:"What moves you", q:"Which problem makes your heart heavy?", o:[
-    ["People who do not know the truth","teach"],["People who are hurting or alone","care"],["People who lack basic needs","give"],["Disorder and wasted potential","lead"],["People who are far from God","reach"]]},
+    ["People who do not know the truth","teach"],["People who are hurting or alone","care"],["People who lack basic needs","give"],["Disorder and wasted potential","lead"],["People who are far from God","reach"],["Situations only God can change","pray"],["People who have lost heart","encourage"],["Injustice and people who are oppressed","justice"]]},
   {sec:"What moves you", q:"If you could fix one thing in your community, what would it be?", o:[
-    ["Lack of education and guidance","teach"],["Loneliness and broken hearts","care"],["Poverty and lack of opportunity","give"],["Poor systems and technology","build"],["Lack of hope and inspiration","create"]]},
+    ["Lack of education and guidance","teach"],["Loneliness and broken hearts","care"],["Poverty and lack of opportunity","give"],["Poor systems and technology","build"],["Lack of hope and inspiration","create"],["Lack of prayer","pray"],["Corruption and unfair treatment","justice"]]},
   {sec:"What moves you", q:"What would you gladly do for free?", o:[
-    ["Teach or mentor someone","teach"],["Visit and comfort people","care"],["Help with practical jobs","serve"],["Design, write or make music","create"],["Share Jesus with strangers","reach"],["Build or fix things","build"]]},
+    ["Teach or mentor someone","teach"],["Visit and comfort people","care"],["Help with practical jobs","serve"],["Design, write or make videos","create"],["Share Jesus with strangers","reach"],["Build or fix things","build"],["Pray for people","pray"],["Coach and encourage someone","encourage"],["Lead worship or play in the band","worship"],["Speak up for someone who has no voice","justice"]]},
   {sec:"What moves you", q:"Which Bible story stirs you most?", o:[
-    ["Nehemiah rebuilding the wall","lead"],["The Good Samaritan","care"],["Paul teaching the churches","teach"],["Bezalel making the tabernacle","create"],["Philip and the Ethiopian","reach"],["Joseph storing grain in Egypt","give"]]},
+    ["Nehemiah rebuilding the wall","lead"],["The Good Samaritan","care"],["Paul teaching the churches","teach"],["Bezalel making the tabernacle","create"],["Philip and the Ethiopian","reach"],["Joseph storing grain in Egypt","give"],["Daniel praying three times a day","pray"],["Barnabas encouraging Paul","encourage"],["David dancing before the Lord","worship"],["Esther speaking up for her people","justice"]]},
   {sec:"What moves you", q:"When you picture your life's work, where do you see yourself?", o:[
-    ["In front of people, helping them learn","teach"],["Beside people, walking with them through hard times","care"],["Behind the scenes, making things run","serve"],["At the head, leading a team or project","lead"],["At a desk or workshop, making or building","build"],["Out in the community, telling people about Jesus","reach"]]},
+    ["In front of people, helping them learn","teach"],["Beside people, walking with them through hard times","care"],["Behind the scenes, making things run","serve"],["At the head, leading a team or project","lead"],["At a desk or workshop, making or building","build"],["Out in the community, telling people about Jesus","reach"],["On my knees, praying for people and nations","pray"],["Leading people in worship","worship"],["Standing up for people who are treated unfairly","justice"]]},
   {sec:"Your story", q:"When have you felt most alive and useful?", o:[
-    ["Helping someone understand something for the first time","teach"],["Comforting someone in pain","care"],["Pulling off a team event or project","lead"],["Finishing something creative","create"],["Solving a hard technical problem","build"],["Giving to someone in need","give"]]},
+    ["Helping someone understand something for the first time","teach"],["Comforting someone in pain","care"],["Pulling off a team event or project","lead"],["Finishing something creative","create"],["Solving a hard technical problem","build"],["Giving to someone in need","give"],["Praying and seeing God answer","pray"],["Seeing someone take heart after I encouraged them","encourage"],["Leading or singing in worship","worship"],["Standing up for someone who was wronged","justice"]]},
   {sec:"Your story", q:"When a group has no one in charge, what do you do?", o:[
-    ["Step in and organise","lead"],["Quietly start helping with tasks","serve"],["Look for what is broken and fix it","build"],["Check on who is left out","care"],["Suggest an idea to inspire everyone","create"]]},
+    ["Step in and organise","lead"],["Quietly start helping with tasks","serve"],["Look for what is broken and fix it","build"],["Check on who is left out","care"],["Suggest an idea to inspire everyone","create"],["Pray for the group","pray"],["Cheer people on and lift the mood","encourage"]]},
   {sec:"Your story", q:"What do you love to read or watch?", o:[
-    ["Books and talks that teach","teach"],["Testimonies of changed lives","reach"],["Design, music, film and art","create"],["Technology, science and how things work","build"],["Leadership and business","lead"],["Stories of generosity","give"]]},
+    ["Books and talks that teach","teach"],["Testimonies of changed lives","reach"],["Design, film and art","create"],["Technology, science and how things work","build"],["Leadership and business","lead"],["Stories of generosity","give"],["Books on prayer","pray"],["Worship music","worship"],["Stories of people fighting injustice","justice"]]},
   {sec:"Your story", q:"Which of these would you gladly do on a Saturday?", o:[
-    ["Run a free class for teenagers","teach"],["Visit a hospital or a sad friend","care"],["Set up chairs and clean for an event","serve"],["Plan and lead an outreach","lead"],["Edit a video, design a poster or write a song","create"],["Build a small app or fix something for a ministry","build"],["Give or raise money for someone's need","give"],["Share the gospel in a public place","reach"]]},
+    ["Run a free class for teenagers","teach"],["Visit a hospital or a sad friend","care"],["Set up chairs and clean for an event","serve"],["Plan and lead an outreach","lead"],["Edit a video or design a poster","create"],["Build a small app or fix something for a ministry","build"],["Give or raise money for someone's need","give"],["Share the gospel in a public place","reach"],["Join a prayer meeting","pray"],["Practise with the worship team","worship"],["Volunteer with a group that helps the oppressed","justice"]]},
   {sec:"Your story", q:"When you walk into a room, what do you notice first?", o:[
-    ["Someone sitting alone or looking sad","care"],["What needs to be done","serve"],["Who is in charge and how it is run","lead"],["The design, sound and atmosphere","create"],["How things are set up and how they work","build"]]},
+    ["Someone sitting alone or looking sad","care"],["What needs to be done","serve"],["Who is in charge and how it is run","lead"],["The design, sound and atmosphere","create"],["How things are set up and how they work","build"],["Whether the room is ready for worship","worship"],["Who is being treated unfairly","justice"]]},
   {sec:"What others see", q:"Which sentence sounds most like you?", o:[
-    ["“I love seeing people finally understand.”","teach"],["“I cannot ignore someone who is hurting.”","care"],["“If something needs doing, I will do it.”","serve"],["“I see where we should go and can bring others.”","lead"],["“I see ideas and beauty that others miss.”","create"],["“Give me a problem and I will find a way.”","build"],["“I would rather give than keep.”","give"],["“I cannot keep the good news to myself.”","reach"]]},
+    ["“I love seeing people finally understand.”","teach"],["“I cannot ignore someone who is hurting.”","care"],["“If something needs doing, I will do it.”","serve"],["“I see where we should go and can bring others.”","lead"],["“I see ideas and beauty that others miss.”","create"],["“Give me a problem and I will find a way.”","build"],["“I would rather give than keep.”","give"],["“I cannot keep the good news to myself.”","reach"],["“I pray about everything and for everyone.”","pray"],["“I love helping people find their next step.”","encourage"],["“I come alive when we worship together.”","worship"],["“I cannot stay quiet when something is unjust.”","justice"]]},
   {sec:"What others see", q:"Which words have people used about you?", o:[
-    ["Wise, patient","teach"],["Kind, gentle","care"],["Dependable, humble","serve"],["Confident, decisive","lead"],["Imaginative","create"],["Smart, logical","build"],["Generous","give"],["Bold, passionate","reach"]]},
+    ["Wise, patient","teach"],["Kind, gentle","care"],["Dependable, humble","serve"],["Confident, decisive","lead"],["Imaginative","create"],["Smart, logical","build"],["Generous","give"],["Bold, passionate","reach"],["Prayerful","pray"],["Encouraging, uplifting","encourage"],["Worshipful, musical","worship"],["Fair, courageous","justice"]]},
   {sec:"What others see", q:"People come to you when they need...", o:[
-    ["Advice and understanding","teach"],["Comfort","care"],["Help getting things done","serve"],["Direction","lead"],["Fresh ideas","create"],["Answers and solutions","build"],["Resources or support","give"],["Someone to talk to about God","reach"]]},
+    ["Advice and understanding","teach"],["Comfort","care"],["Help getting things done","serve"],["Direction","lead"],["Fresh ideas","create"],["Answers and solutions","build"],["Resources or support","give"],["Someone to talk to about God","reach"],["Prayer","pray"],["Encouragement and counsel","encourage"],["Someone to stand up for them","justice"]]},
   {sec:"Where you are going", q:"Ten years from now, what would make you proudest?", o:[
-    ["People I taught are now teaching others","teach"],["People I walked with found healing","care"],["A team I supported became strong","serve"],["A work I started that outlived me","lead"],["Something I made that moved many people","create"],["A solution that made life easier","build"],["Needs were met because of what I gave","give"],["People who met Jesus through me","reach"]]},
+    ["People I taught are now teaching others","teach"],["People I walked with found healing","care"],["A team I supported became strong","serve"],["A work I started that outlived me","lead"],["Something I made that moved many people","create"],["A solution that made life easier","build"],["Needs were met because of what I gave","give"],["People who met Jesus through me","reach"],["Prayers I prayed that God answered","pray"],["People I encouraged who did not give up","encourage"],["A worshipping church I helped build","worship"],["Lives changed because I stood for justice","justice"]]},
   {sec:"Where you are going", q:"Which part of church or community life draws you most?", o:[
-    ["Bible study or Sunday school","teach"],["Prayer or counselling team","care"],["Hospitality, ushering or logistics","serve"],["Planning committee or leadership","lead"],["Media, choir, drama or design","create"],["Technical, sound, IT or construction","build"],["Welfare, finance or projects fund","give"],["Evangelism or outreach","reach"]]}
+    ["Bible study or Sunday school","teach"],["Pastoral care or visiting","care"],["Hospitality, ushering or logistics","serve"],["Planning committee or leadership","lead"],["Media, drama or design","create"],["Technical, sound, IT or construction","build"],["Welfare, finance or projects fund","give"],["Evangelism or outreach","reach"],["Prayer or intercession team","pray"],["Counselling or mentoring","encourage"],["Choir or worship team","worship"],["Social justice or community action","justice"]]}
 ];
 
 var PEOPLE = [
@@ -369,7 +389,7 @@ function renderResult(){
     var t = THEMES[r.key];
     html += '<div class="theme-card"><h3><span class="rank">'+(i+1)+'</span>'+esc(t.name)+'</h3><p>'+esc(t.desc)+'</p><p class="verse">'+esc(t.verse)+'</p></div>';
   });
-  html += '<div class="card"><h3>All eight themes</h3><div class="bars">';
+  html += '<div class="card"><h3>All '+Object.keys(THEMES).length+' themes</h3><div class="bars">';
   ranked.forEach(function(r,i){
     html += '<div class="bar'+(i<3?' top':'')+'"><span>'+esc(THEMES[r.key].name)+'</span><div class="track"><div class="fill" style="width:'+r.pct+'%"></div></div><span class="pct">'+r.pct+'%</span></div>';
   });
