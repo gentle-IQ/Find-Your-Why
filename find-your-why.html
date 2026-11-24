@@ -44,7 +44,7 @@ button,.btn{font:inherit;font-weight:600;border-radius:10px;padding:13px 20px;bo
 button.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 button:disabled{opacity:.45;cursor:not-allowed}
 button:focus-visible,input:focus-visible,textarea:focus-visible,.opt:focus-within{outline:3px solid var(--green);outline-offset:2px}
-input[type=text],textarea{width:100%;font:inherit;color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:12px}
+input[type=text],input[type=email],input[type=tel],textarea{width:100%;font:inherit;color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:12px}
 textarea{min-height:92px;resize:vertical}
 #stmt{min-height:150px}
 label.field{display:block;font-weight:600;margin:16px 0 6px}
@@ -65,10 +65,16 @@ ul.steps li{margin-bottom:6px}
 .recap dt{font-weight:600;margin-top:10px}
 .recap dd{margin:2px 0 0;color:var(--muted);white-space:pre-wrap}
 .toast{min-height:22px;color:var(--green);font-weight:600;font-size:15px}
+dialog.email-choice{max-width:min(440px,calc(100% - 32px));border:1px solid var(--line);border-radius:16px;padding:24px;color:var(--ink);background:var(--bg)}
+dialog.email-choice::backdrop{background:rgba(15,30,77,.58)}
+dialog.email-choice p{color:var(--muted)}
+dialog.email-choice .apps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:20px}dialog.email-choice .app{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 6px;border:1px solid rgba(15,30,77,.14);border-radius:14px;background:#fff;color:#0F1E4D;font-size:13px;font-weight:600;text-align:center;transition:transform .15s,border-color .15s}dialog.email-choice .app:hover{transform:translateY(-2px);border-color:#C9A24B}dialog.email-choice .app:focus-visible{outline:3px solid #C9A24B;outline-offset:2px}dialog.email-choice .app svg{width:40px;height:40px}dialog.email-choice .cancel{display:block;width:100%;margin-top:14px}@media (max-width:420px){dialog.email-choice .apps{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:480px){h1{font-size:28px}.bar{grid-template-columns:110px 1fr 40px;font-size:14px}}
+.printonly{display:none}
 @media print{
   body{background:#fff;color:#000}
   header.brand,.actions,.nav,.noprint{display:none!important}
+  .printonly{display:block!important}
   .card,.theme-card{border-color:#999;break-inside:avoid}
 }
 </style>
@@ -81,9 +87,9 @@ ul.steps li{margin-bottom:6px}
 
 <script>
 /* ===== Settings: edit these three lines before you publish ===== */
-var MENTOR_NAME = "my mentor";        // shown on the share buttons
-var MENTOR_WHATSAPP = "";             // digits only with country code, e.g. 233XXXXXXXXX. Leave empty to let them pick a contact.
-var MENTOR_EMAIL = "";                // e.g. name@example.com. Leave empty to let them type an address.
+var MENTOR_NAME = "Sir Isaac";       // name shown in the quiz introduction
+var MENTOR_WHATSAPP = "233557229000"; // digits only with country code
+var MENTOR_EMAIL = "echoesofwisdom.ministries@gmail.com";
 
 /* ===== Content ===== */
 var THEMES = {
@@ -370,6 +376,16 @@ function renderResult(){
   html += '<div class="card"><h3>Your next steps</h3><ul class="steps">'+t1.steps.map(function(s){return '<li>'+esc(s)+'</li>';}).join('')+
     '<li>Test your draft with the seven lenses: Scripture, prayer, gifts, burden, counsel, open doors and faithfulness.</li></ul>'+
     '<p class="verse">“Without counsel purposes are disappointed: but in the multitude of counsellors they are established.” (Proverbs 15:22)</p></div><div style="height:14px"></div>';
+  html += '<div class="card"><h3>Would you like me to mentor you?</h3>'+
+    '<p class="muted">Reach out to Sir Isaac if you would like guidance on your next steps.</p>'+
+    '<p class="printonly">WhatsApp: +233 55 722 9000<br>Email: echoesofwisdom.ministries@gmail.com</p>'+
+    '<div class="actions"><a class="btn" href="https://wa.me/233557229000?text=Hello%20Sir%20Isaac%2C%20I%20would%20like%20to%20ask%20about%20being%20mentored." target="_blank" rel="noopener">WhatsApp Sir Isaac</a>'+
+    '<button type="button" class="btn" id="showMentorEmailChoice">Email Sir Isaac</button></div></div>'+
+    '<dialog class="email-choice" id="mentorEmailChoice" aria-labelledby="mentorEmailTitle">'+
+    '<h3 id="mentorEmailTitle">Open with</h3>'+
+    '<p>Choose an email app to contact Sir Isaac.</p>'+
+    '<div class="apps"><a class="app" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=echoesofwisdom.ministries@gmail.com"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#4285F4" d="M6 40h7V22L4 15v22a3 3 0 0 0 2 3z"/><path fill="#34A853" d="M35 40h7a3 3 0 0 0 2-3V15l-9 7z"/><path fill="#FBBC04" d="M35 10v12l9-7v-4c0-3.7-4.2-5.8-7.2-3.6z"/><path fill="#EA4335" d="M13 22V10l11 8.3L35 10v12l-11 8.3z"/><path fill="#C5221F" d="M4 11v4l9 7V10l-1.8-1.6C8.2 6.2 4 8.3 4 11z"/></svg><span>Gmail</span></a><a class="app" href="https://outlook.live.com/mail/0/deeplink/compose?to=echoesofwisdom.ministries@gmail.com"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="16" y="9" width="27" height="30" rx="3" fill="#28A8EA"/><path fill="#0364B8" d="M16 20l13.5 8L43 20v16a3 3 0 0 1-3 3H19a3 3 0 0 1-3-3z"/><rect x="4" y="13" width="22" height="22" rx="3" fill="#0078D4"/><ellipse cx="15" cy="24" rx="5.2" ry="6.4" fill="none" stroke="#fff" stroke-width="2.8"/></svg><span>Outlook</span></a><a class="app" href="https://compose.mail.yahoo.com/?to=echoesofwisdom.ministries@gmail.com"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="4" y="4" width="40" height="40" rx="10" fill="#6001D2"/><path fill="#fff" d="M12 16h5.5l4.3 10.5L26.2 16h5.3L23.6 34h-5.2l2.1-4.8z"/><circle cx="34.5" cy="31" r="2.6" fill="#fff"/><path fill="#fff" d="M32 15h5l-1.6 12h-2z"/></svg><span>Yahoo Mail</span></a><a class="app" href="mailto:echoesofwisdom.ministries@gmail.com"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="4" y="9" width="40" height="30" rx="5" fill="#0F1E4D"/><path d="M8 14l16 12 16-12" fill="none" stroke="#C9A24B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Mail app</span></a></div>'+
+    '<button type="button" class="cancel" id="closeMentorEmailChoice">Cancel</button></dialog><div style="height:14px"></div>';
   var any = WORDS.some(function(w){return state.words[w[0]];}), ca = customAnswers();
   if(any || ca.length){
     html += '<div class="card"><h3>In your own words</h3><dl class="recap">';
@@ -377,27 +393,58 @@ function renderResult(){
     ca.forEach(function(c){ html += '<dt>'+esc(c.q)+'</dt><dd>'+esc(c.a)+'</dd>'; });
     html += '</dl>'+(ca.length?'<p class="small muted">Answers you wrote yourself are not part of the scores. Look for them when you talk with your mentor.</p>':'')+'</div><div style="height:14px"></div>';
   }
-  html += '<div class="card noprint"><h3>Want guidance?</h3><p class="muted">Sharing is your choice. Nothing is sent until you press a button, and you can read the message first.</p>'+
-    '<div class="actions">'+
-    '<button class="primary" id="wa">Send to '+esc(MENTOR_NAME)+' on WhatsApp</button>'+
-    '<button id="mail">Send to '+esc(MENTOR_NAME)+' by email</button>'+
-    '<button id="copy">Copy my results</button>'+
-    '<button id="print">Print or save as PDF</button>'+
-    '<button id="again">Start again</button></div><div class="toast" id="toast" role="status"></div></div>';
+  html += '<div class="card noprint"><h3>Share with your mentor</h3>'+
+    '<p class="muted">Sharing is your choice. Add a contact, review the message, then choose how to share it. Nothing is sent until you press a sharing button; contact details stay on this device.</p>'+
+    '<label class="field" for="mentorEmail">Mentor email</label>'+
+    '<input id="mentorEmail" type="email" autocomplete="email" placeholder="name@example.com" value="'+esc(MENTOR_EMAIL)+'">'+
+    '<label class="field" for="mentorWhatsapp">Mentor WhatsApp number</label>'+
+    '<input id="mentorWhatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="Country code and number, e.g. 233XXXXXXXXX" value="'+esc(MENTOR_WHATSAPP)+'">'+
+    '<div class="actions"><button class="primary" id="reviewShare">Review message</button></div>'+
+    '<div id="sharePreview" hidden><label class="field" for="shareMessage">Preview and edit what you will share</label>'+
+    '<textarea id="shareMessage" aria-describedby="shareHint"></textarea>'+
+    '<p id="shareHint" class="small muted">Only the text in this box will be shared.</p>'+
+    '<div class="actions"><button class="primary" id="wa">Share via WhatsApp</button><button id="mail">Share via email app</button></div></div>'+
+    '<div class="actions"><button id="copy">Copy my results</button><button id="print">Print or save as PDF</button><button id="again">Start again</button></div>'+
+    '<div class="toast" id="toast" role="status"></div></div>';
   app.innerHTML = html;
 
   $('#stmt').oninput = function(){ state.statement = this.value; };
+  $('#showMentorEmailChoice').onclick = function(){ $('#mentorEmailChoice').showModal(); };
+  $('#closeMentorEmailChoice').onclick = function(){ $('#mentorEmailChoice').close(); };
+  $('#mentorEmailChoice').addEventListener('click', function(e){ if(e.target === this || e.target.closest('.app')) this.close(); });
   function toast(m){ $('#toast').textContent = m; }
+  $('#reviewShare').onclick = function(){
+    state.statement = $('#stmt').value;
+    $('#shareMessage').value = shareText(ranked);
+    $('#sharePreview').hidden = false;
+    $('#shareMessage').focus();
+  };
+  $('#mentorEmail').oninput = function(){ this.setCustomValidity(''); };
+  $('#mentorWhatsapp').oninput = function(){ this.setCustomValidity(''); };
   $('#wa').onclick = function(){
-    var url = "https://wa.me/"+(MENTOR_WHATSAPP||"")+"?text="+encodeURIComponent(shareText(ranked));
+    var field = $('#mentorWhatsapp'), raw = field.value.trim();
+    field.setCustomValidity('');
+    if(!raw){ field.setCustomValidity("Enter your mentor's WhatsApp number."); field.reportValidity(); return; }
+    if(!/^\+?[\d\s().-]+$/.test(raw) || raw.replace(/\D/g,'').length<7 || raw.replace(/\D/g,'').length>15){
+      field.setCustomValidity("Enter a valid international number with country code.");
+      field.reportValidity();
+      return;
+    }
+    var number = raw.replace(/\D/g,'');
+    var url = "https://wa.me/"+number+"?text="+encodeURIComponent($('#shareMessage').value);
     window.open(url, "_blank", "noopener");
   };
   $('#mail').onclick = function(){
-    var url = "mailto:"+(MENTOR_EMAIL||"")+"?subject="+encodeURIComponent("My Find Your Why results")+"&body="+encodeURIComponent(shareText(ranked));
+    var field = $('#mentorEmail'), address = field.value.trim();
+    field.setCustomValidity('');
+    if(!address){ field.setCustomValidity("Enter your mentor's email address."); field.reportValidity(); return; }
+    if(!field.checkValidity()){ field.reportValidity(); return; }
+    var url = "mailto:"+address+"?subject="+encodeURIComponent("My Find Your Why results")+"&body="+encodeURIComponent($('#shareMessage').value);
     window.location.href = url;
   };
   $('#copy').onclick = function(){
-    var txt = shareText(ranked);
+    state.statement = $('#stmt').value;
+    var txt = $('#sharePreview').hidden ? shareText(ranked) : $('#shareMessage').value;
     if(navigator.clipboard && navigator.clipboard.writeText){
       navigator.clipboard.writeText(txt).then(function(){ toast("Copied. You can paste it anywhere."); },function(){ toast("Could not copy. Select the text and copy it yourself."); });
     } else { toast("Copy is not available in this browser."); }
